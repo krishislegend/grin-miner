@@ -131,7 +131,10 @@ fn main() {
 		.clone()
 		.unwrap();
 
-	let mining_config = global_config.members.as_mut().unwrap().mining.clone();
+	// Send Proper Panic message when there is error loading mining config
+	let mining_config = global_config.members.as_mut().unwrap()_or_else(|e| {
+		panic!("Error parsing Mining config file: {}", e);
+		}).mining.clone();
 
 	if cfg!(feature = "tui") && mining_config.run_tui {
 		log_conf.log_to_stdout = false;
